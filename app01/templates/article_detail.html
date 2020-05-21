@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block page-main %}
+<div class="article-detail">
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.articledetail.content|safe }}</p>
+</div>
+<div class="poll clearfix">
+    <div id="div_digg">
+        <div class="diggit action">
+            <span class="diggnum" id="digg_count">{{ article.thumbs_up_count }}</span>
+        </div>
+        <div class="buryit action">
+            <span class="burynum" id="bury_count">{{ article.unlike_count }}</span>
+        </div>
+        <div class="clear"></div>
+        <div class="diggword" id="digg_tips" style="color: red;"></div>
+    </div>
+</div>
+{#    <div id="article_id">{{ article.pk }}</div>#}
+    <div class="info"
+         article_id="{{ article.pk }}"
+         user="{{ request.user.username }}"
+         user_id="{{ request.user.pk }}"
+    >
+
+    </div>
+    {% csrf_token %}
+<script src="/static/js/article_detail_recomment.js"></script>
+
+    <div class="div_comment">
+    <p>comment list</p>
+{#    <div class="comment_tree">#}
+{##}
+{#    </div>#}
+        <hr>
+
+
+    <ul class="comment_list">
+        {% for comment in comment_list %}
+        <li class="list-group-item">
+            <div>
+                <a href="">#{{ forloop.counter }} floor</a>
+                &nbsp;&nbsp;
+                <span style="color: gray">{{ comment.create_time|date:"Y-m-d H:i" }}</span>
+                &nbsp;&nbsp;
+                <a href="/blog/{{ comment.user.username }}"><span>{{ comment.user.username }}</span></a>
+                <a class="pull-right reply_btn" username="{{ comment.user.username }}"
+                pid="{{ comment.pk }}"
+                ><span>reply</span></a>
+            </div>
+            {% if comment.parent_comment_id %}
+                <div class="pid_info well">
+                    <p>{{ comment.parent_comment.user.username }}&nbsp;&nbsp;&nbsp;&nbsp;{{ comment.parent_comment.content }}</p>
+                </div>
+            {% endif %}
+
+            <div class="con">
+                <p>
+                    <span><img src="/media/{{ comment.user.avatar }}" class="img-circle" width="36px" height="36px" alt=""></span>
+                    <span>&nbsp;&nbsp;:&nbsp;&nbsp;</span>
+                    <span>{{ comment.content|safe }}</span>
+                </p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% if request.user.username %}
+        <p>
+            nickname：
+            <input type="text" id="tbCommentAuthor" class="author" disabled="disabled"
+                   size="50" value="{{ request.user.username }}">
+        </p>
+        <p>
+        Comment:
+            <br>
+            <br>
+            <textarea name="" id="comment_area" cols="75" rows="10"></textarea>
+            <br>
+            <button class="btn btn-default" id="comment_btn">Submit</button>
+        </p>
+    {% else %}
+        <a href="/login/">Login</a>
+    {% endif %}
+        <script src="/static/js/article_detail_comment.js"></script>
+        <script>
+            var articleWidth = $(".article-detail").width();
+            var articleImages = $(".article-detail img");
+            articleImages.each(function() {
+                var articleImgWidth = $(this).width();
+                if(articleImgWidth > articleWidth) {
+                    $(this).css("width",articleWidth)
+                }
+                });
+
+        </script>
+    </div>
+{% endblock %}

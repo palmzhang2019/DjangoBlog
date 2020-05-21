@@ -1,0 +1,62 @@
+{#           {% for article in article_list %}#}
+{#            <div class="article">#}
+{#                <h3><a href="/blog/{{ article.user.username }}/article/{{ article.pk }}">{{ article.title }}</a></h3>#}
+{#                <div class="media">#}
+{#                    <div class="media-left">#}
+{#                        <a href="">#}
+{#                            <img src="/media/{{ article.user.avatar }}" alt="" class="media-object author-img">#}
+{#                        </a>#}
+{#                    </div>#}
+{#                    <div class="media-body">#}
+{#                        <p>{{ article.desc|safe }}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="article-footer">#}
+{#                    <span><a href="/blog/{{ article.user.username }}">{{ article.user.username }}</a>&nbsp;&nbsp;</span>published at:&nbsp;&nbsp;#}
+{#                    <span>{{ article.create_time|date:'Y-m-d H:i:s' }}&nbsp;&nbsp;&nbsp;&nbsp;</span>#}
+{#                    <span class="glyphicon glyphicon-comment">{{ article.comment_count }}</span>#}
+{#                    <span class="glyphicon glyphicon-thumbs-up">{{ article.thumbs_up_count }}</span>#}
+{#                    <span><i class="fa fa-commenting-o fa-x" aria-hidden="true"></i>({{ article.comment_count }}) </span>#}
+{#                    <span>&nbsp;&nbsp;<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>({{ article.thumbs_up_count }})  </span>#}
+{#                </div>#}
+{#                <hr>#}
+{#            </div>#}
+{#            {% endfor %}#}
+{% for article in article_list %}
+<article class="excerpt">
+	<header>
+        {% if article.tags.first %}
+            <a class="label label-important" href="/blog/tag/{{ article.tags.first }}">{{ article.tags.first }}<i class="label-arrow"></i></a>
+        {% endif %} 
+        <h2>
+            <a target="_blank" href="/blog/{{ article.user.username }}/article/{{ article.pk }}">{{ article.title }}</a>
+        </h2>
+	</header>
+	<div class="focus">
+        <a target="_blank" href="/blog/{{ article.user.username }}/article/{{ article.pk }}">
+            <img class="thumbnail" src={% load mainImage %} {% showMainImage article.pk %} alt="{{ article.title }}">
+        </a>
+    </div>
+    <span class="note">
+        {{ article.desc }}...
+        <p class="auth-span">
+            <span class="muted">
+                <a href="/blog/{{ article.user.username }}"><img class="fa fa-user" src="/media/{{ article.user.avatar }}" alt=""></a>
+                <a href="/blog/{{ article.user.username }}">
+                    {{ article.user.username }}</a>
+            </span>
+            <span class="muted"><i class="fa fa-clock-o"></i>{{ article.create_time|date:'Y-m-d H:i:s' }}</span>
+{#            <span class="muted"><i class="fa fa-eye"></i> article浏览</span>#}
+            <span class="muted"><i class="fa fa-comments-o"></i>
+                <a target="_blank" href="ArticleCommentLink">{{ article.comment_count }}评论</a>
+            </span>
+            <span class="muted">
+                <a href="javascript:;" data-action="ding" data-id="9296" id="Addlike" class="action">
+                    <i class="fa fa-heart-o"></i>
+                    <span class="count">{{ article.thumbs_up_count }}</span>喜欢
+                </a>
+            </span>
+        </p>
+    </span>
+</article>
+{% endfor %}

@@ -1,0 +1,30 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">article category</div>
+  <div class="panel-body">
+      {% for category in category_list %}
+          <a href="/blog/category/{{ category.title }}">
+            <p>{{ category.title }}({{ category.c }})</p>
+          </a>
+      {% endfor %}
+  </div>
+</div>
+<div class="panel panel-success">
+  <div class="panel-heading">article tags</div>
+  <div class="panel-body">
+      {% for tag in tag_list %}
+          <a href="/blog/tag/{{ tag.title }}">
+            <p>{{ tag.title }}({{ tag.c }})</p>
+          </a>
+      {% endfor %}
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">article archives</div>
+  <div class="panel-body">
+      {% for archinve in archive_list %}
+          <a href="/blog/archive/{{ archinve.archive_ym }}">
+            <p>{{ archinve.archive_ym }}({{ archinve.c }})</p>
+          </a>
+      {% endfor %}
+  </div>
+</div>

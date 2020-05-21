@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tkd.title }}</title>
+    <meta name="keywords" content="{{ tkd.keywords }}">
+    <meta name="description" content="{{ tkd.description }}">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/mystyle.css">
+    <link rel="stylesheet" href="/static/css/blogYuan.css">
+    <script src="/static/jquery-3.3.1.js"></script>
+    <script src="/static/js/jqthumb.js"></script>
+</head>
+<body>
+<div class="top_header">
+    <div class="container-inner">
+        <div class="yusi-logo">
+            <a href="/">
+                <h1>
+                    <span class="yusi-mono">呆呆爱学习</span>
+                    {% if username %}
+                    <span class="yusi-bloger">{{ username }}的主页</span>
+                    <span><img src="/media/{{ user.avatar }}" class="img-circle" width="75px" height="75px" alt=""></span>
+                    {% endif %}
+                </h1>
+            </a>
+        </div>
+    </div>
+
+</div>
+{% include "nav.html" %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            {% block page-main %}
+
+            {% endblock %}
+
+        </div>
+        <div class="col-md-3">
+        {% load my_tags %}
+
+        {% get_left_menu username %}
+
+        </div>
+    <nav class="col-lg-5 col-xs-offset-3">
+        <ul class="pagination">
+            {{ pagination.page_html|safe }}
+        </ul>
+    </nav>
+    </div>
+</div>
+<style>
+    .container{
+        width: 1226px;
+        max-width: 1226px;
+    }
+</style>
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="copyright pull-left">
+         <a href="/" title="呆呆爱学习">呆呆爱学习</a>
+            版权所有丨基于<a href="/" title="Django"> Django </a>
+            构建
+		 <div>
+		 </div>
+		</div>
+
+    </div>
+</footer>
+
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
